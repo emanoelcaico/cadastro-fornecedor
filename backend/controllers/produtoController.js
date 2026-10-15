@@ -133,6 +133,6 @@ exports.desassociarFornecedor = async (req, res) => {
   }
 };
 
-exports.associarFornecedor = async (req, res) => {
-  // ... o código vem aqui
-};
+
+
+

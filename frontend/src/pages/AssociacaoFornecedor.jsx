@@ -35,9 +35,11 @@ export default function AssociacaoFornecedor({ produtoId, onClose }) {
     carregar();
   }, [produtoId]);
 
-  // 🎯 CENÁRIOS 1 e 2
   async function handleAssociar() {
+    console.log('🖱️ handleAssociar chamado. fornecedorSelecionado =', fornecedorSelecionado);
+
     if (!fornecedorSelecionado) {
+      console.log('⚠️ fornecedorSelecionado está vazio!');
       setMensagem("Selecione um fornecedor.");
       setTipoMensagem("erro");
       return;
@@ -61,7 +63,6 @@ export default function AssociacaoFornecedor({ produtoId, onClose }) {
     }
   }
 
-  // 🎯 CENÁRIO 3
   async function handleDesassociar(fornecedorId) {
     if (!window.confirm("Deseja desassociar este fornecedor?")) return;
 
@@ -149,7 +150,10 @@ export default function AssociacaoFornecedor({ produtoId, onClose }) {
           <div className="assoc-linha">
             <select
               value={fornecedorSelecionado}
-              onChange={(e) => setFornecedorSelecionado(e.target.value)}
+              onChange={(e) => {
+                console.log('🎯 Select mudou para:', e.target.value);
+                setFornecedorSelecionado(e.target.value);
+              }}
             >
               <option value="">Selecione um fornecedor</option>
               {fornecedoresDisponiveis.map((f) => (
