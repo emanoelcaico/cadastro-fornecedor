@@ -9,28 +9,36 @@ export default function ListaFornecedores() {
   useEffect(() => {
     listarFornecedores()
       .then(({ data }) => {
-        setFornecedores(data);
+        console.log("🟢 Fornecedores recebidos:", data);
+        setFornecedores(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
-        setErro(err.response?.data?.mensagem || "Erro ao buscar fornecedores");
+        console.error("🔴 Erro:", err);
+        setErro(err.response?.data?.mensagem || err.message || "Erro ao buscar fornecedores");
         setLoading(false);
       });
   }, []);
 
   if (loading) return <p>Carregando fornecedores...</p>;
-  if (erro) return <p>❌ {erro}</p>;
+  if (erro) return <p style={{ color: "red" }}>❌ {erro}</p>;
 
   return (
-    <div>
+    <div style={{ padding: 20 }}>
       <h2>Lista de Fornecedores</h2>
+
+      <p style={{ color: "#666" }}>Total: {fornecedores.length}</p>
+
       {fornecedores.length === 0 ? (
         <p>Nenhum fornecedor cadastrado.</p>
       ) : (
         <ul>
           {fornecedores.map((f) => (
-            <li key={f.id}>{f.nome}</li>
+            <li key={f.id}>
+              <strong>{f.nomeEmpresa || f.nome}</strong>
+              {f.cnpj && <span> — CNPJ: {f.cnpj}</span>}
+              {f.email && <span> — {f.email}</span>}
+            </li>
           ))}
         </ul>
       )}
