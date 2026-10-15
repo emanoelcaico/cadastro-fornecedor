@@ -1,0 +1,21 @@
+{
+  "name": "cadastro-fornecedor",
+  "version": "1.0.0",
+  "description": "FACULDADE GRAN (https://faculdade.grancursosonline.com.br/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emanoelcaico/cadastro-fornecedor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/emanoelcaico/cadastro-fornecedor/issues"
+  },
+  "homepage": "https://github.com/emanoelcaico/cadastro-fornecedor#readme"
+}
