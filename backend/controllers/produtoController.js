@@ -42,7 +42,7 @@ exports.listar = async (req, res) => {
     console.error(err);
     res.status(500).json({ mensagem: "Erro ao listar produtos" });
   }
-};
+};  
 
 exports.buscarPorId = async (req, res) => {
   try {
@@ -131,4 +131,8 @@ exports.desassociarFornecedor = async (req, res) => {
     console.error(err);
     res.status(500).json({ mensagem: "Erro ao desassociar fornecedor" });
   }
+};
+
+exports.associarFornecedor = async (req, res) => {
+  // ... o código vem aqui
 };
