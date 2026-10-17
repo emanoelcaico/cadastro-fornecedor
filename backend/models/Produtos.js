@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "Produto",
     {
       nome: { type: DataTypes.STRING, allowNull: false },
-      codigoBarras: { type: DataTypes.STRING },
+      codigoBarras: { type: DataTypes.STRING, unique: true, allowNull: true },
       descricao: { type: DataTypes.TEXT, allowNull: false },
       quantidade: { type: DataTypes.INTEGER, defaultValue: 0 },
       categoria: { type: DataTypes.STRING, allowNull: false },

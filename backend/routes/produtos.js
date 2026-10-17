@@ -7,6 +7,7 @@ router.get("/:id", controller.buscarPorId);
 router.post("/", controller.criar);
 router.post("/:id/fornecedores", controller.associarFornecedor);
 router.delete("/:id/fornecedores/:fornecedorId", controller.desassociarFornecedor);
+router.delete("/:id", controller.excluir);
 
  
 

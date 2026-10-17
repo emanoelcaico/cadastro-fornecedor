@@ -19,8 +19,8 @@ exports.criar = async (req, res) => {
     });
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
-      return res.status(400).json({ erros: { cnpj: "CNPJ já cadastrado" } });
-    }
+  return res.status(400).json({ erros: { cnpj: "Fornecedor com esse CNPJ já está cadastrado!" } });
+}
     console.error(error);
     return res.status(500).json({ mensagem: "Erro ao cadastrar fornecedor" });
   }
@@ -50,3 +50,23 @@ exports.buscarPorId = async (req, res) => {
     res.status(500).json({ mensagem: "Erro ao buscar fornecedor" });
   }
 };  
+
+
+exports.excluir = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const fornecedor = await Fornecedor.findByPk(id);
+    
+    if (!fornecedor) {
+      return res.status(404).json({ mensagem: "Fornecedor não encontrado" });
+    }
+
+    await fornecedor.destroy();
+
+    return res.json({ mensagem: "Fornecedor excluído com sucesso!" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ mensagem: "Erro ao excluir fornecedor" });
+  }
+};

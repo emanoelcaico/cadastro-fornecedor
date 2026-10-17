@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { listarProdutos } from "../services/api";
+import { listarProdutos, excluirProduto } from "../services/api";
 import AssociacaoFornecedor from "./AssociacaoFornecedor";
 
 export default function ListaProdutos() {
@@ -25,6 +25,17 @@ export default function ListaProdutos() {
 
   if (carregando) return <p style={{ padding: 20 }}>Carregando produtos...</p>;
 
+  async function handleExcluir(id) {
+    if (!window.confirm("Tem certeza que deseja excluir este produto?")) return;
+    try {
+      await excluirProduto(id);
+      carregar(); // recarrega a lista
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao excluir produto.");
+    }
+  }
+
   return (
     <div style={{ padding: 20 }}>
       <h1>Produtos Cadastrados</h1>
@@ -45,21 +56,37 @@ export default function ListaProdutos() {
               <tr key={p.id} style={{ borderBottom: "1px solid #eee" }}>
                 <td style={{ padding: 10 }}>{p.nome}</td>
                 <td style={{ padding: 10 }}>{p.categoria}</td>
-                <td style={{ padding: 10 }}>
-                  <button
-                    onClick={() => setProdutoSelecionado(p.id)}
-                    style={{
-                      background: "#1976d2",
-                      color: "#fff",
-                      border: "none",
-                      padding: "6px 12px",
-                      borderRadius: 6,
-                      cursor: "pointer",
-                    }}
-                  >
-                    Associar Fornecedores
-                  </button>
-                </td>
+               <td style={{ padding: 10 }}>
+  <button
+    onClick={() => setProdutoSelecionado(p.id)}
+    style={{
+      background: "#1976d2",
+      color: "#fff",
+      border: "none",
+      padding: "6px 12px",
+      borderRadius: 6,
+      cursor: "pointer",
+      marginRight: 8,
+    }}
+  >
+    Associar Fornecedores
+  </button>
+
+  {/* 👇 BOTÃO NOVO AQUI 👇 */}
+  <button
+    onClick={() => handleExcluir(p.id)}
+    style={{
+      background: "#d32f2f",
+      color: "#fff",
+      border: "none",
+      padding: "6px 12px",
+      borderRadius: 6,
+      cursor: "pointer",
+    }}
+  >
+    Excluir
+  </button>
+</td>
               </tr>
             ))}
           </tbody>

@@ -29,6 +29,11 @@ exports.criar = async (req, res) => {
       produto,
     });
   } catch (error) {
+    if (error.name === "SequelizeUniqueConstraintError") {
+      return res.status(400).json({
+        erros: { codigoBarras: "Produto com este código de barras já está cadastrado!" },
+      });
+    }
     console.error(error);
     return res.status(500).json({ mensagem: "Erro ao cadastrar produto" });
   }
@@ -42,7 +47,8 @@ exports.listar = async (req, res) => {
     console.error(err);
     res.status(500).json({ mensagem: "Erro ao listar produtos" });
   }
-};  
+};
+// ... e o resto do arquivo continua normal
 
 exports.buscarPorId = async (req, res) => {
   try {
@@ -134,5 +140,23 @@ exports.desassociarFornecedor = async (req, res) => {
 };
 
 
+exports.excluir = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const produto = await Produto.findByPk(id);
+    
+    if (!produto) {
+      return res.status(404).json({ mensagem: "Produto não encontrado" });
+    }
+
+    await produto.destroy();
+
+    return res.json({ mensagem: "Produto excluído com sucesso!" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ mensagem: "Erro ao excluir produto" });
+  }
+};
 
 

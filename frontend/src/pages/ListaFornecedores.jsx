@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { listarFornecedores } from "../services/api";
+import { listarFornecedores, excluirFornecedor } from "../services/api";
 
 export default function ListaFornecedores() {
   const [fornecedores, setFornecedores] = useState([]);
@@ -23,6 +23,19 @@ export default function ListaFornecedores() {
   if (loading) return <p>Carregando fornecedores...</p>;
   if (erro) return <p style={{ color: "red" }}>❌ {erro}</p>;
 
+  async function handleExcluir(id) {
+    if (!window.confirm("Tem certeza que deseja excluir este fornecedor?")) return;
+    try {
+      await excluirFornecedor(id);
+      // Recarrega a lista após excluir
+      const { data } = await listarFornecedores();
+      setFornecedores(data);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao excluir fornecedor.");
+    }
+  }
+
   return (
     <div style={{ padding: 20 }}>
       <h2>Lista de Fornecedores</h2>
@@ -33,14 +46,30 @@ export default function ListaFornecedores() {
         <p>Nenhum fornecedor cadastrado.</p>
       ) : (
         <ul>
-          {fornecedores.map((f) => (
-            <li key={f.id}>
-              <strong>{f.nomeEmpresa || f.nome}</strong>
-              {f.cnpj && <span> — CNPJ: {f.cnpj}</span>}
-              {f.email && <span> — {f.email}</span>}
-            </li>
-          ))}
-        </ul>
+  {fornecedores.map((f) => (
+    <li key={f.id}>
+      <strong>{f.nomeEmpresa || f.nome}</strong>
+      {f.cnpj && <span> — CNPJ: {f.cnpj}</span>}
+      {f.email && <span> — {f.email}</span>}
+      
+      {/* 👇 BOTÃO NOVO AQUI 👇 */}
+      <button
+        onClick={() => handleExcluir(f.id)}
+        style={{
+          background: "#d32f2f",
+          color: "#fff",
+          border: "none",
+          padding: "4px 10px",
+          borderRadius: 4,
+          cursor: "pointer",
+          marginLeft: 10,
+        }}
+      >
+        Excluir
+      </button>
+    </li>
+  ))}
+</ul>
       )}
     </div>
   );

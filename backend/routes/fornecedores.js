@@ -5,5 +5,5 @@ const controller = require("../controllers/fornecedorController");
 router.get("/", controller.listar);
 router.get("/:id", controller.buscarPorId);
 router.post("/", controller.criar);
-
+router.delete("/:id", controller.excluir);
 module.exports = router;
