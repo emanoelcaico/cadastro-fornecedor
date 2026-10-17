@@ -1,5 +1,6 @@
 # FACULDADE GRAN
 Projeto Disciplina Projeto Integrador
+Aluno: Emanoel do Nascimento Alves
 
 ## Funcionalidades Implementadas
 - [x] Cadastro de Produtos (Create, Read, Delete)
